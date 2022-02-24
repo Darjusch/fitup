@@ -1,0 +1,10 @@
+node_modules
+package-lock.json
+secrets.json
+*build*
+cache
+artifacts
+.env
+coverage
+coverage.json
+typechain

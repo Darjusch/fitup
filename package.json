@@ -1,0 +1,22 @@
+{
+  "name": "fitup",
+  "version": "1.0.0",
+  "description": "Make your self accountable by betting on your goals!",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Darjusch/fitup.git"
+  },
+  "author": "Darjusch Schrand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Darjusch/fitup/issues"
+  },
+  "homepage": "https://github.com/Darjusch/fitup#readme"
+}
