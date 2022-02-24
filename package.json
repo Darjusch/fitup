@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Darjusch/fitup/issues"
   },
-  "homepage": "https://github.com/Darjusch/fitup#readme"
+  "homepage": "https://github.com/Darjusch/fitup#readme",
+  "dependencies": {
+    "chai": "^4.3.6"
+  }
 }
