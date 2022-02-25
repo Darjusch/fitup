@@ -21,6 +21,6 @@ In the Folder:
 
 To run the tests: 
 
-1. ``` npm i chai ```
+1. ``` npm i ```
 
 2. ``` truffle test ```
