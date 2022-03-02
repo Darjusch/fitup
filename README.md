@@ -18,7 +18,7 @@ We are using node: v14.15.4
 
 4. Launch Ganache.
 
-5. Select Quickstart Ethereum
+5. Select Quickstart Ethereum ( Change Port to 8545)
 
 6. ``` truffle migrate ```
 
