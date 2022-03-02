@@ -6,6 +6,9 @@ Make your self accountable by betting on your goals!
 
 In the Folder:
 
+Check your node version: node --version
+We are using node: v14.15.4
+
 1. ``` npm install -g truffle ```
 
 2. ``` truffle compile ```
