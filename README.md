@@ -1,7 +1,9 @@
 # fitup
+
 Make your self accountable by betting on your goals!
 
-# Setup:
+## Setup
+
 ``` git clone https://github.com/Darjusch/fitup ```
 
 In the Folder:
@@ -14,7 +16,7 @@ We are using node: v14.15.4
 2. ``` truffle compile ```
 
 3. Download and install Ganache.
-    -> https://trufflesuite.com/ganache/
+    -> <https://trufflesuite.com/ganache/>
 
 4. Launch Ganache.
 
@@ -22,7 +24,7 @@ We are using node: v14.15.4
 
 6. ``` truffle migrate ```
 
-To run the tests: 
+To run the tests:
 
 1. ``` npm i ```
 
