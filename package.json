@@ -1,4 +1,5 @@
 {
+  "type":"module",
   "name": "fitup",
   "version": "1.0.0",
   "description": "Make your self accountable by betting on your goals!",
@@ -20,7 +21,8 @@
   },
   "homepage": "https://github.com/Darjusch/fitup#readme",
   "dependencies": {
-    "ethers": "^5.5.4"
+    "ethers": "^5.5.4",
+    "web3": "^1.7.0"
   },
   "devDependencies": {
     "chai": "^4.3.6",
