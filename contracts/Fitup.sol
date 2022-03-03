@@ -34,7 +34,7 @@ contract Fitup {
     }
     
     function payoutBet(bool _success, address _issuer) external onlyOwner {
-        // TODO remove bet afterwards
+        require(bets[_issuer].amount > 0);
         uint256 _amount = bets[_issuer].amount;
         address _organisation = bets[_issuer].organisation;
         if(_success == true) {
