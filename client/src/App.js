@@ -19,22 +19,47 @@ class App extends Component {
         getAccount();
       });
       
+      var currentAccount;
+
       // Get current Account
       async function getAccount() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0];
-        showAccount.innerHTML = account;
+        currentAccount = accounts[0];
+        showAccount.innerHTML = currentAccount;
       }
 
       // If account is changed
       window.ethereum.on('accountsChanged', function (accounts) {
-        const account = accounts[0];
-        showAccount.innerHTML = account;
+        const currentAccount = accounts[0];
+        showAccount.innerHTML = currentAccount;
       })
 
-      const {web3, deployedNetwork, contract, accounts, someOrganisation} = await setupWeb3Contract();
-      // Assigning objects to state so we can use it in our functions more easily
-      this.setState = {web3, deployedNetwork, contract, accounts, someOrganisation};
+      const {web3, deployedNetwork, contract} = await setupWeb3Contract();
+
+
+      // Some random address
+      const someOrganisation = "0x1F78324b386d7EDa0CFd45947B8796B1F22053F4"
+      
+
+      // Create Bet
+      const createBetButton = document.querySelector('.createBetButton');
+      createBetButton.addEventListener('click', () => {
+        createBet(currentAccount, someOrganisation, contract);
+      });
+
+      // Get Bet
+      const getBetButton = document.querySelector('.getBetButton');
+      getBetButton.addEventListener('click', () => {
+        getBet(currentAccount, contract);
+      });
+
+      // Payout Bet
+      const payoutBetButton = document.querySelector('.payoutBetButton');
+      payoutBetButton.addEventListener('click', () => {
+        payoutBet(currentAccount, contract);
+      });
+
+
     }
     catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
@@ -52,6 +77,9 @@ class App extends Component {
         </p>
         <button className="enableEthereumButton">Enable Ethereum</button>
         <h2>Account: <span className="showAccount"></span></h2>
+        <button className="createBetButton">Create Bet</button>
+        <button className="getBetButton">Get Bet</button>
+        <button className="payoutBetButton">Payout Bet</button>
       </header>
     </div>
   );
@@ -83,19 +111,12 @@ async function setupWeb3Contract() {
       
         // Create web3 contract object
         var contract = new web3.eth.Contract(Fitup.abi, deployedNetwork.address);
-  
-        // Get web3 accounts
-        const accounts = await web3.eth.getAccounts();
-  
-        // Some random address
-        const someOrganisation = "0x1F78324b386d7EDa0CFd45947B8796B1F22053F4"
-        
-        return web3, deployedNetwork, contract, accounts, someOrganisation
+
+        return {web3, deployedNetwork, contract}
 }
 
-function createBet() {
-  const {accounts, someOrganisation, contract} = this.state;
-  contract.methods.createBet(someOrganisation).send({from: accounts[0], value: 1}, function (err, res) {
+function createBet(currentAccount, someOrganisation, contract) {
+  contract.methods.createBet(someOrganisation).send({from: currentAccount, value: 1}, function (err, res) {
       if (err) {
           console.log("An error occured", err)
           return
@@ -105,10 +126,8 @@ function createBet() {
   })
 }
 
-function getBet() {
-  const {accounts, contract} = this.state;
-
-  contract.methods.getBet(accounts[0]).call(function (err, res) {
+function getBet(currentAccount, contract) {
+  contract.methods.getBet(currentAccount).call(function (err, res) {
       if (err) {
           console.log("An error occured", err)
           return
@@ -118,10 +137,8 @@ function getBet() {
   })
 }
 
-function payoutBet() {
-  const {accounts, contract} = this.state;
-
-  contract.methods.payoutBet(true, accounts[0]).send({from: accounts[0]}, function (err, res) {
+function payoutBet(currentAccount, contract) {
+  contract.methods.payoutBet(true, currentAccount).send({from: currentAccount}, function (err, res) {
       if (err) {
           console.log("An error occured", err)
           return
