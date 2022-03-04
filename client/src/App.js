@@ -34,7 +34,7 @@ class App extends Component {
         showAccount.innerHTML = currentAccount;
       })
 
-      const {web3, deployedNetwork, contract} = await setupWeb3Contract();
+      const {contract} = await setupWeb3Contract();
 
 
       // Some random address
@@ -59,7 +59,17 @@ class App extends Component {
         payoutBet(currentAccount, contract);
       });
 
+      contract.events.BetCreated({})
+      .on('data', async function(event){
+          console.log(`CREATE BET\n Creator: ${event.returnValues.creator}\n Organisation: ${event.returnValues.organisation}\n Amount: ${event.returnValues.amount}`)
+      })
+      .on('error', console.error);
 
+      contract.events.BetPayout({})
+      .on('data', async function(event){
+          console.log(`PAYOUT BET\n Issuer: ${event.returnValues.issuer}\n Organisation: ${event.returnValues.organisation}\n Amount: ${event.returnValues.amount}\n Success: ${event.returnValues.success}`)
+      })
+      .on('error', console.error);
     }
     catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
@@ -101,8 +111,9 @@ function isMetaMaskOrEthereumCompatible() {
 }
 
 async function setupWeb3Contract() {
-        // Connect web3 provider
-        const web3 = new Web3("http://127.0.0.1:8545");
+        // Connect web3 provider 
+        // we use ws instead of http to listen to events. ( ws is short for websocket provider)
+        const web3 = new Web3("ws://127.0.0.1:8545");
 
         // Get network address
         const networkId = await web3.eth.net.getId();
@@ -118,33 +129,31 @@ async function setupWeb3Contract() {
 function createBet(currentAccount, someOrganisation, contract) {
   contract.methods.createBet(someOrganisation).send({from: currentAccount, value: 1}, function (err, res) {
       if (err) {
+          alert("Make sure you enabled Ethereum")
           console.log("An error occured", err)
           return
       }
-      console.log("Hash of the transaction: " + res)
-      console.log(res)
   })
 }
 
 function getBet(currentAccount, contract) {
   contract.methods.getBet(currentAccount).call(function (err, res) {
       if (err) {
+          alert("Make sure you enabled Ethereum")
           console.log("An error occured", err)
           return
       }
-      console.log("Hash of the transaction: " + res)
-      console.log(res)
-  })
+      console.log(`GET BET\n Amount: ${res.amount}\n Organisation ${res.organisation}`)
+    })
 }
 
 function payoutBet(currentAccount, contract) {
   contract.methods.payoutBet(true, currentAccount).send({from: currentAccount}, function (err, res) {
       if (err) {
+          alert("Make sure you enabled Ethereum") 
           console.log("An error occured", err)
           return
       }
-      console.log("Hash of the transaction: " + res)
-      console.log(res)
   })
 }
 export default App;
