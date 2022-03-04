@@ -59,12 +59,14 @@ class App extends Component {
         payoutBet(currentAccount, contract);
       });
 
+      // Listen to event Bet Created
       contract.events.BetCreated({})
       .on('data', async function(event){
           console.log(`CREATE BET\n Creator: ${event.returnValues.creator}\n Organisation: ${event.returnValues.organisation}\n Amount: ${event.returnValues.amount}`)
       })
       .on('error', console.error);
 
+      // Listen to event Bet Payout
       contract.events.BetPayout({})
       .on('data', async function(event){
           console.log(`PAYOUT BET\n Issuer: ${event.returnValues.issuer}\n Organisation: ${event.returnValues.organisation}\n Amount: ${event.returnValues.amount}\n Success: ${event.returnValues.success}`)
@@ -150,7 +152,7 @@ function getBet(currentAccount, contract) {
 function payoutBet(currentAccount, contract) {
   contract.methods.payoutBet(true, currentAccount).send({from: currentAccount}, function (err, res) {
       if (err) {
-          alert("Make sure you enabled Ethereum") 
+          alert("Make sure you enabled Ethereum and you are the owner of the contract") 
           console.log("An error occured", err)
           return
       }
