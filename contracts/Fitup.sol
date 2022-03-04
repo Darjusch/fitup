@@ -30,6 +30,7 @@ contract Fitup {
     }
 
     function getBet(address _from) external view returns(Bet memory) {
+        require(bets[_from].amount > 0, "No Bet exists for that Address");
         return bets[_from];
     }
     
