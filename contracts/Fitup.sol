@@ -9,7 +9,7 @@ contract Fitup {
         uint256 amount;
         address organisation; 
     }
-    mapping (address => Bet ) bets;
+    mapping (address => Bet) bets;
 
     event BetCreated(address creator, address organisation, uint256 amount);
     event BetPayout(address issuer, bool success, address organisation, uint256 amount);
