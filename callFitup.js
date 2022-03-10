@@ -14,24 +14,27 @@ const accounts = await web3.eth.getAccounts();
 const someOrganisation = "0x1F78324b386d7EDa0CFd45947B8796B1F22053F4"
 
 function createBet() {
-    contract.methods.createBet(someOrganisation).send({from: accounts[0], value: 1}, function (err, res) {
+    console.log("Running createBet")
+    contract.methods.createBet(someOrganisation).send({from: "0xB3479377859d54feb715cEC2EA19b0Ea411c9b36", value: 1}, function (err, res) {
         if (err) {
             console.log("An error occured", err)
             return
         }
         console.log("Hash of the transaction: " + res)
-        console.log(res)
+        getBet()
+        getBalance();
+        getBetCount()
     })
 }
 
 function getBet() {
-    contract.methods.getBet(accounts[0]).call(function (err, res) {
+    contract.methods.getBet("0xB3479377859d54feb715cEC2EA19b0Ea411c9b36").call(function (err, res) {
         if (err) {
             console.log("An error occured", err)
             return
         }
-        console.log("Hash of the transaction: " + res)
-        console.log(res)
+        console.log("Bet Data: " + res)
+       
     })
 }
 
@@ -44,6 +47,22 @@ function payoutBet() {
         console.log("Hash of the transaction: " + res)
         console.log(res)
     })
+
+
+}
+async function getBalance(){
+   const balance=  await web3.eth.getBalance("0xB3479377859d54feb715cEC2EA19b0Ea411c9b36")
+   
+    console.log(balance)
+
+
 }
 
+async function getBetCount(){
+    const betCount = await contract.methods.getBetCount();
+    console.log(betCount)
+
+}
+
+createBet()
 
