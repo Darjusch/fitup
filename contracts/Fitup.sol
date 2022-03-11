@@ -28,11 +28,10 @@ contract Fitup {
         address organisation,
         uint256 amount
     );
-    mapping (address => Bet ) bets;
+ 
     Ngo[] ngos;
 
-    event BetCreated(address creator, address organisation, uint256 amount);
-    event BetPayout(address issuer, bool success, address organisation, uint256 amount);
+
     event NgoAdded(string name, address organisation);
 
     modifier onlyOwner() {
@@ -85,9 +84,20 @@ contract Fitup {
         require(msg.value > 0, "The bet value has to be bigger than 0");
         _;
     }
-}
+
     function addNgo(string memory name, address organisation) external onlyOwner {
         ngos.push(Ngo(name, organisation));
         emit NgoAdded(name, organisation);
+    }
+
+    function doesNgoExist(uint256 _ngoAddress) public view returns (bool){
+
+        Ngo memory ngo = ngos[_ngoAddress];
+        bytes memory ngoAsBytes = bytes(ngo.name);
+
+        return ngoAsBytes.length > 0;
+
+        
+
     }
 }
