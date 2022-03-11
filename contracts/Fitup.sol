@@ -1,11 +1,16 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.11;
+pragma solidity  ^0.8.11;
 
 contract Fitup {
     address owner;
     uint256 public totalBetCount = 0;
     uint256 public activeBetCount = 0;
     bool active = false;
+
+    struct Ngo {
+        string name;
+        address organisation;
+    }
 
     struct Bet {
         uint256 amount;
@@ -23,6 +28,12 @@ contract Fitup {
         address organisation,
         uint256 amount
     );
+    mapping (address => Bet ) bets;
+    Ngo[] ngos;
+
+    event BetCreated(address creator, address organisation, uint256 amount);
+    event BetPayout(address issuer, bool success, address organisation, uint256 amount);
+    event NgoAdded(string name, address organisation);
 
     modifier onlyOwner() {
         require(msg.sender == owner);
@@ -45,7 +56,8 @@ contract Fitup {
         emit BetCreated(msg.sender, organisation, msg.value);
     }
 
-    function getBet(address _from) external view returns (Bet memory) {
+    function getBet(address _from) external view returns(Bet memory) {
+        require(bets[_from].amount > 0, "No Bet exists for that Address");
         return bets[_from];
     }
 
@@ -72,5 +84,10 @@ contract Fitup {
     modifier validateBet() {
         require(msg.value > 0, "The bet value has to be bigger than 0");
         _;
+    }
+}
+    function addNgo(string memory name, address organisation) external onlyOwner {
+        ngos.push(Ngo(name, organisation));
+        emit NgoAdded(name, organisation);
     }
 }
