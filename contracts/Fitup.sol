@@ -5,14 +5,21 @@ contract Fitup {
     
     address owner;
 
+    struct Ngo {
+        string name;
+        address organisation;
+    }
+
     struct Bet {
         uint256 amount;
         address organisation; 
     }
     mapping (address => Bet ) bets;
+    Ngo[] ngos;
 
     event BetCreated(address creator, address organisation, uint256 amount);
     event BetPayout(address issuer, bool success, address organisation, uint256 amount);
+    event NgoAdded(string name, address organisation);
 
     modifier onlyOwner {
         require(msg.sender == owner);
@@ -30,6 +37,7 @@ contract Fitup {
     }
 
     function getBet(address _from) external view returns(Bet memory) {
+        require(bets[_from].amount > 0, "No Bet exists for that Address");
         return bets[_from];
     }
     
@@ -44,5 +52,10 @@ contract Fitup {
             payable(_organisation).transfer(_amount);
         }
         emit BetPayout(_issuer, _success, _organisation, _amount);
+    }
+
+    function addNgo(string memory name, address organisation) external onlyOwner {
+        ngos.push(Ngo(name, organisation));
+        emit NgoAdded(name, organisation);
     }
 }
