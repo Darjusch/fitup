@@ -16,8 +16,7 @@ contract Recive {
       return message;
       }
       
-   
-   function testFunction (string memory re) public view {
-      re = re;
-      }
+
+
 }
+
