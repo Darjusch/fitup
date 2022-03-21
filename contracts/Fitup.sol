@@ -29,12 +29,12 @@ contract Fitup {
         uint256 amount
     );
 
-    Ngo[] ngos;
+    Ngo[] public ngos;
 
     event NgoAdded(string name, address organisation);
 
     modifier onlyOwner() {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "only owner can call this");
         _;
     }
 
@@ -61,8 +61,9 @@ contract Fitup {
         return bets[_from];
     }
 
+
     function payoutBet(bool _success, address _issuer) external onlyOwner {
-        require(bets[_issuer].amount > 0);
+        require(bets[_issuer].amount > 0, "Valus has to be more than 0");
         uint256 _amount = bets[_issuer].amount;
         address _organisation = bets[_issuer].organisation;
         if (_success == true) {
@@ -93,6 +94,7 @@ contract Fitup {
     {
         ngos.push(Ngo(name, organisation));
         emit NgoAdded(name, organisation);
+
     }
 
     function doesNgoExist(address _ngoAddress) public view returns (bool) {
@@ -103,4 +105,6 @@ contract Fitup {
         }
         return false;
     }
+
+
 }
