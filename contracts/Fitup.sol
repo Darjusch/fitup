@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity  ^0.8.11;
+pragma solidity ^0.8.11;
 
 contract Fitup {
     address owner;
@@ -28,9 +28,8 @@ contract Fitup {
         address organisation,
         uint256 amount
     );
- 
-    Ngo[] ngos;
 
+    Ngo[] ngos;
 
     event NgoAdded(string name, address organisation);
 
@@ -44,6 +43,8 @@ contract Fitup {
     }
 
     function createBet(address organisation) external payable validateBet {
+        require(doesNgoExist(organisation) == true, "No ngo with this address");
+
         incrementCount();
         incrementActiveCount();
         uint256 amount = msg.value;
@@ -55,7 +56,7 @@ contract Fitup {
         emit BetCreated(msg.sender, organisation, msg.value);
     }
 
-    function getBet(address _from) external view returns(Bet memory) {
+    function getBet(address _from) external view returns (Bet memory) {
         require(bets[_from].amount > 0, "No Bet exists for that Address");
         return bets[_from];
     }
@@ -76,6 +77,7 @@ contract Fitup {
         totalBetCount += 1;
     }
 
+    // Storing capacity, need to be reviewed!!
     function incrementActiveCount() internal {
         activeBetCount += 1;
     }
@@ -85,19 +87,20 @@ contract Fitup {
         _;
     }
 
-    function addNgo(string memory name, address organisation) external onlyOwner {
+    function addNgo(string memory name, address organisation)
+        external
+        onlyOwner
+    {
         ngos.push(Ngo(name, organisation));
         emit NgoAdded(name, organisation);
     }
 
-    function doesNgoExist(uint256 _ngoAddress) public view returns (bool){
-
-        Ngo memory ngo = ngos[_ngoAddress];
-        bytes memory ngoAsBytes = bytes(ngo.name);
-
-        return ngoAsBytes.length > 0;
-
-        
-
+    function doesNgoExist(address _ngoAddress) public view returns (bool) {
+        for (uint256 i = 0; i < ngos.length; i++) {
+            if (ngos[i].organisation == _ngoAddress) {
+                return true;
+            }
+        }
+        return false;
     }
 }
