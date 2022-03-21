@@ -1,6 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
-let secret = require("./secret");
+// let secret = require("./secret");
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -20,13 +20,15 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.11",
   networks: {
-    ropsten: {
-      url: secret.ropsten_url,
-      accounts: [secret.key]
+    hardhat: {
     },
-  },
-  etherscan: {
-    apiKey: secret.etherscan_key
+  //   ropsten: {
+  //     url: secret.ropsten_url,
+  //     accounts: [secret.key]
+  //   },
+  // },
+  // etherscan: {
+  //   apiKey: secret.etherscan_key
+  // }
   }
-  
 };
