@@ -9,18 +9,21 @@ contract("Fitup", accounts => {
     const account_one = accounts[1];
     const account_two = accounts[2];
     const organisation = accounts[3]; //Represents the organisation we donate to
+    const organisation2 = accounts[4]
     const one_eth = ethers.utils.parseEther('1');
 
     let fitup;
     before( async () => {
         fitup = await Fitup.deployed();
+        await fitup.addNgo("CODE", organisation);
     });
     beforeEach( async () => {
         await fitup.createBet(
-            organisation, { 
+            organisation, {
             from: account_one,
             value: one_eth
         });
+
     });
     it('creates a bet', async () => {
         bet = await fitup.getBet(account_one);
@@ -41,5 +44,12 @@ contract("Fitup", accounts => {
         const after = Number(ethers.utils.formatEther(await web3.eth.getBalance(from)));
         return {before, after};
     }
+
+    it("Add NGO", async()=>{
+        ngo = await fitup.addNgo( "UN", organisation2);
+        expect(await fitup.doesNgoExist(organisation2)).to.be.equal(true)
+        // expect(ngo.organisation).to.be.equal(organisation2)
+
+    })
 })
 
