@@ -32,12 +32,14 @@ describe("Fitup", function () {
     expect(await fitup.createBet(organisation.address, value)).to.emit(fitup, "BetCreated").withArgs(owner.address, organisation.address, 1)
 
 });
-  // it("Should add a NGO", async () => {
+  it("Should add a NGO", async () => {
 
-  //   await expect(fitup.addNgo(("UN", organisation2.address, "frf"))).to.emit(fitup, "NgoAdded").withArgs("UN", organisation2.address,"dmskmn")
+    const from = {from:owner.address}
+
+     expect(await fitup.addNgo( "UN", organisation2.address )).to.emit(fitup, "NgoAdded").withArgs( "UN", organisation2.address)
 
 
-  // })
+  })
   // it("Should payout a bet to a NGO", async () => {
   //   expect(await fitup.payoutBet(false, owner.address)).to.emit(fitup, "BetPayout").withArgs(owner.address, false, organisation.address, 100000000)
   // })
