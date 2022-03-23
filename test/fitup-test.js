@@ -44,9 +44,13 @@ describe('Fitup', function () {
       .to.emit(fitup, 'BetPayout')
       .withArgs(owner.address, true, organisation.address, value)
   })
-  it('Should check if NGO exist', async () => {
+  it('Should return NGO exists', async () => {
     const ngoExist = await fitup.doesNgoExist(organisation.address)
     expect(ngoExist).to.be.equal(true)
+  })
+  it('Should return NGO doesn\'t exists', async () => {
+    const ngoExist = await fitup.doesNgoExist(owner.address)
+    expect(ngoExist).to.be.equal(false)
   })
   it('Should retun a bet', async () => {
     const bet = await fitup.getBet(owner.address)
