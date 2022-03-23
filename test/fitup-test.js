@@ -14,6 +14,11 @@ describe("Fitup", function () {
 
   const options = { value: ethers.utils.parseEther("500") };
   const provider = waffle.provider;
+  async function _getBalance(_address) {
+    return parseInt(
+      ethers.utils.formatEther(await provider.getBalance(_address))
+    );
+  }
   beforeEach(async function () {
     Fitup = await ethers.getContractFactory("Fitup");
     fitup = await Fitup.deploy();
@@ -25,12 +30,8 @@ describe("Fitup", function () {
 
     await fitup.connect(addr1).createBet(organisation.address, options);
 
-    balanceInEthAfter = parseInt(
-      ethers.utils.formatEther(await provider.getBalance(addr1.address))
-    );
-    OrgBalanceInEth = parseInt(
-      ethers.utils.formatEther(await provider.getBalance(organisation.address))
-    );
+    balanceInEthAfter = await _getBalance(addr1.address);
+    OrgBalanceInEth = await _getBalance(organisation.address);
   });
   it("Should create a BET", async () => {
     await expect(fitup.createBet(organisation.address, options))
@@ -77,9 +78,7 @@ describe("Fitup", function () {
 
     it("should payout the creator", async () => {
       const payOut = await fitup.payoutBet(true, addr1.address);
-      const balanceInEthPay = parseInt(
-        ethers.utils.formatEther(await provider.getBalance(addr1.address))
-      );
+      const balanceInEthPay = await _getBalance(addr1.address);
 
       expect(payOut.data.toLowerCase().slice(98, 138)).to.be.equal(
         addr1.address.toLowerCase().slice(2, 42)
@@ -90,11 +89,7 @@ describe("Fitup", function () {
 
     it("Should payout the orginization", async () => {
       const payOut = await fitup.payoutBet(false, addr1.address);
-      const balanceInEthPay = parseInt(
-        ethers.utils.formatEther(
-          await provider.getBalance(organisation.address)
-        )
-      );
+      const balanceInEthPay = await _getBalance(organisation.address);
 
       expect(balanceInEthPay).to.be.above(OrgBalanceInEth);
     });
