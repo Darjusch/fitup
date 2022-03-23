@@ -22,12 +22,12 @@ contract Fitup {
     mapping(address => Bet) public bets;
 
     event BetCreated(address creator, address organisation, uint256 amount);
-    event BetPayout(
-        address issuer,
-        bool success,
-        address organisation,
-        uint256 amount
-    );
+    event BetCreatedWithoutIncrement(address creator, address organisation, uint256 amount);
+    event BetCreatedWithoutIncrementAndVariables(address creator, address organisation, uint256 amount);
+
+    event BetPayout(address issuer, bool success, address organisation, uint256 amount);
+    event BetPayoutWithoutVariables(address issuer, bool success, address organisation, uint256 amount);
+    event BetPayoutWithoutVariablesPublic(address issuer, bool success, address organisation, uint256 amount);
 
     Ngo[] public ngos;
 
@@ -41,7 +41,6 @@ contract Fitup {
     constructor() {
         owner = msg.sender;
     }
-
     function createBet(address organisation) external payable validateBet {
         require(doesNgoExist(organisation) == true, "No ngo with this address");
 
@@ -54,6 +53,23 @@ contract Fitup {
 
         bets[creator] = Bet(amount, organisation, created_at, active);
         emit BetCreated(msg.sender, organisation, msg.value);
+    }
+
+    function createBetWithoutIncrement(address organisation) external payable validateBet {
+        require(doesNgoExist(organisation) == true, "No ngo with this address");
+
+        uint256 amount = msg.value;
+        address creator = msg.sender;
+        uint256 created_at = block.timestamp;
+        active = true;
+
+        bets[creator] = Bet(amount, organisation, created_at, active);
+        emit BetCreatedWithoutIncrement(msg.sender, organisation, msg.value);
+    }
+    function createBetWithoutIncrementAndVariables(address organisation) external payable validateBet {
+        require(doesNgoExist(organisation) == true, "No ngo with this address");
+        bets[msg.sender] = Bet(msg.value, organisation, block.timestamp, true);
+        emit BetCreatedWithoutIncrementAndVariables(msg.sender, organisation, msg.value);
     }
 
     function getBet(address _from) external view returns (Bet memory) {
@@ -72,6 +88,24 @@ contract Fitup {
             payable(_organisation).transfer(_amount);
         }
         emit BetPayout(_issuer, _success, _organisation, _amount);
+    }
+    function payoutBetWithoutVariables(bool _success, address _issuer) external onlyOwner {
+        require(bets[_issuer].amount > 0, "Valus has to be more than 0");
+        if (_success == true) {
+            payable(_issuer).transfer(bets[_issuer].amount);
+        } else {
+            payable(bets[_issuer].organisation).transfer(bets[_issuer].amount);
+        }
+        emit BetPayoutWithoutVariables(_issuer, _success, bets[_issuer].organisation, bets[_issuer].amount);
+    }    
+    function payoutBetWithoutVariablesPublic(bool _success, address _issuer) public onlyOwner {
+        require(bets[_issuer].amount > 0, "Valus has to be more than 0");
+        if (_success == true) {
+            payable(_issuer).transfer(bets[_issuer].amount);
+        } else {
+            payable(bets[_issuer].organisation).transfer(bets[_issuer].amount);
+        }
+        emit BetPayoutWithoutVariablesPublic(_issuer, _success, bets[_issuer].organisation, bets[_issuer].amount);
     }
 
     function incrementCount() internal {
@@ -94,7 +128,6 @@ contract Fitup {
     {
         ngos.push(Ngo(name, organisation));
         emit NgoAdded(name, organisation);
-
     }
 
     function doesNgoExist(address _ngoAddress) public view returns (bool) {
