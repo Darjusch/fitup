@@ -28,6 +28,8 @@ Verify contract automatically using etherscan
 
 1. ``` npx hardhat test ```
 
+2. Check test coverage ``` npx hardhat coverage ```
+
 ## Contracts deployed and verified
 
 (22.03.2022)
