@@ -19,6 +19,8 @@ describe("Fitup", function () {
       ethers.utils.formatEther(await provider.getBalance(_address))
     );
   }
+  before(async function(){})
+
   beforeEach(async function () {
     Fitup = await ethers.getContractFactory("Fitup");
     fitup = await Fitup.deploy();
@@ -88,6 +90,8 @@ describe("Fitup", function () {
     it("should payout the creator", async () => {
       const payOut = await fitup.payoutBet(true, addr1.address);
       const balanceInEthPay = await _getBalance(addr1.address);
+      // const tx = await payOut.wait()
+      // console.log(tx.logs)
 
       expect(payOut.data.toLowerCase().slice(98, 138)).to.be.equal(
         addr1.address.toLowerCase().slice(2, 42)
@@ -99,7 +103,7 @@ describe("Fitup", function () {
     it("Should payout the orginization", async () => {
       const payOut = await fitup.payoutBet(false, addr1.address);
       const balanceInEthPay = await _getBalance(organisation.address);
-
+   
       expect(balanceInEthPay).to.be.above(OrgBalanceInEth);
     });
   });
