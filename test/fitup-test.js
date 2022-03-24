@@ -41,6 +41,8 @@ describe("Fitup", function () {
       );
   });
 
+  
+
   it("Should add a NGO", async () => {
     await expect(fitup.addNgo("UN", organisation2.address))
       .to.emit(fitup, "NgoAdded")
