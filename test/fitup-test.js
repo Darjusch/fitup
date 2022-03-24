@@ -9,28 +9,40 @@ describe("Fitup", function () {
   let addr2;
   let organisation;
   let organisation2;
-  let balanceInEthAfter;
+  let balanceInEth;
   let OrgBalanceInEth;
 
-  const options = { value: ethers.utils.parseEther("500") };
+  const options = { value: ethers.utils.parseEther("1") };
   const provider = waffle.provider;
+  async function _getBalance(_address) {
+    return parseInt(
+      ethers.utils.formatEther(await provider.getBalance(_address))
+    );
+  }
+  before(async function(){})
+
   beforeEach(async function () {
     Fitup = await ethers.getContractFactory("Fitup");
     fitup = await Fitup.deploy();
     await fitup.deployed();
     [owner, addr1, addr2, organisation, organisation2] =
       await ethers.getSigners();
+    
+    // console.log("contract", fitup.address)
+    // console.log("owner", owner.address)
+    // console.log("address1",addr1.address)
+  
+    // console.log("orgnaization",organisation.address)
 
     await fitup.addNgo("CODE", organisation.address, { from: owner.address });
+  
 
     await fitup.connect(addr1).createBet(organisation.address, options);
+    const addrs1Blance = await _getBalance(addr1.address)
+    console.log("Address 1 Balance", addrs1Blance)
 
-    balanceInEthAfter = parseInt(
-      ethers.utils.formatEther(await provider.getBalance(addr1.address))
-    );
-    OrgBalanceInEth = parseInt(
-      ethers.utils.formatEther(await provider.getBalance(organisation.address))
-    );
+    balanceInEth = await _getBalance(addr1.address);
+    OrgBalanceInEth = await _getBalance(organisation.address);
   });
   it("Should create a BET", async () => {
     await expect(fitup.createBet(organisation.address, options))
@@ -38,7 +50,7 @@ describe("Fitup", function () {
       .withArgs(
         owner.address,
         organisation.address,
-        ethers.utils.parseEther("500")
+        ethers.utils.parseEther("1")
       );
   });
 
@@ -58,7 +70,7 @@ describe("Fitup", function () {
           addr1.address,
           false,
           organisation.address,
-          ethers.utils.parseEther("500")
+          ethers.utils.parseEther("1")
         );
     });
 
@@ -71,31 +83,27 @@ describe("Fitup", function () {
           addr1.address,
           true,
           organisation.address,
-          ethers.utils.parseEther("500")
+          ethers.utils.parseEther("1")
         );
     });
 
     it("should payout the creator", async () => {
       const payOut = await fitup.payoutBet(true, addr1.address);
-      const balanceInEthPay = parseInt(
-        ethers.utils.formatEther(await provider.getBalance(addr1.address))
-      );
+      const balanceInEthPay = await _getBalance(addr1.address);
+      // const tx = await payOut.wait()
+      // console.log(tx.logs)
 
       expect(payOut.data.toLowerCase().slice(98, 138)).to.be.equal(
         addr1.address.toLowerCase().slice(2, 42)
       );
 
-      expect(balanceInEthPay).to.be.above(balanceInEthAfter);
+      expect(balanceInEthPay).to.be.above(balanceInEth);
     });
 
     it("Should payout the orginization", async () => {
       const payOut = await fitup.payoutBet(false, addr1.address);
-      const balanceInEthPay = parseInt(
-        ethers.utils.formatEther(
-          await provider.getBalance(organisation.address)
-        )
-      );
-
+      const balanceInEthPay = await _getBalance(organisation.address);
+   
       expect(balanceInEthPay).to.be.above(OrgBalanceInEth);
     });
   });
