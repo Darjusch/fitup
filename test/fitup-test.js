@@ -19,7 +19,6 @@ describe("Fitup", function () {
       ethers.utils.formatEther(await provider.getBalance(_address))
     );
   }
-  before(async function(){})
 
   beforeEach(async function () {
     Fitup = await ethers.getContractFactory("Fitup");
@@ -27,20 +26,8 @@ describe("Fitup", function () {
     await fitup.deployed();
     [owner, addr1, addr2, organisation, organisation2] =
       await ethers.getSigners();
-    
-    // console.log("contract", fitup.address)
-    // console.log("owner", owner.address)
-    // console.log("address1",addr1.address)
-  
-    // console.log("orgnaization",organisation.address)
-
     await fitup.addNgo("CODE", organisation.address, { from: owner.address });
-  
-
     await fitup.connect(addr1).createBet(organisation.address, options);
-    const addrs1Blance = await _getBalance(addr1.address)
-    console.log("Address 1 Balance", addrs1Blance)
-
     balanceInEth = await _getBalance(addr1.address);
     OrgBalanceInEth = await _getBalance(organisation.address);
   });
@@ -61,7 +48,6 @@ describe("Fitup", function () {
   });
 
   describe("Payout functions", function () {
-    // It olny testing of the event get emitted! DOES NOT TEST IF THE PAYABLE ADDRESS.
 
     it("Should Emit Event-payout a bet to a NGO", async () => {
       await expect(fitup.payoutBet(false, addr1.address))
@@ -73,8 +59,6 @@ describe("Fitup", function () {
           ethers.utils.parseEther("1")
         );
     });
-
-    // It olny testing of the event get emitted! DOES NOT TEST IF THE PAYABLE ADDRESS.
 
     it("Should Emit Event-payout a bet to the creator of the bet", async () => {
       await expect(fitup.payoutBet(true, addr1.address))
@@ -90,8 +74,6 @@ describe("Fitup", function () {
     it("should payout the creator", async () => {
       const payOut = await fitup.payoutBet(true, addr1.address);
       const balanceInEthPay = await _getBalance(addr1.address);
-      // const tx = await payOut.wait()
-      // console.log(tx.logs)
 
       expect(payOut.data.toLowerCase().slice(98, 138)).to.be.equal(
         addr1.address.toLowerCase().slice(2, 42)
