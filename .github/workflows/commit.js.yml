@@ -5,7 +5,7 @@ name: Commit-test
 
 on:
   push:
-    branches: [ CI ]
+    branches: [CI/CD]
 
 
 jobs:
