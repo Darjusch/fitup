@@ -33,6 +33,6 @@ jobs:
       with:
         path: '**/package-lock.json'
         key: node-modules-${{ hashFiles('~/package.json') }}
-    - run: npm ci
+    - run: npm install
     - run: npm run build --if-present
     - run: npx hardhat test
