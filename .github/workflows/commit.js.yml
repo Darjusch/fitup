@@ -32,11 +32,17 @@ jobs:
         # cache-dependency-path: ./package-lock.json
 
     - name: Cache
-      uses: actions/cache@v3.0.0
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-node-modules
+      
       with:
-        path: ~/scripts/npmCache
-        key: keyCache #-${{ hashFiles('~/package.json') }}
-        restore-keys: keyCache
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
     - run: npm install
     - run: npm run build --if-present
     - run: npx hardhat test
