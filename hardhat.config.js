@@ -1,6 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
-// let secrets = require("./secrets");
+let secrets = require("./secrets");
 require("hardhat-gas-reporter");
 require("@nomiclabs/hardhat-web3");
 require('solidity-coverage');
@@ -23,37 +23,37 @@ module.exports = {
   networks: {
     hardhat: {
     },
-    // ropsten: {
-    //   url: secrets.ropsten_url,
-    //   accounts: [secrets.key]
-    // },
-    // mumbai: {
-    //   url: secrets.mumbai_url,
-    //   accounts: [secrets.key]
-    // },
-    // binance_testnet: {
-    //   url: secrets.binance_testnet_url,
-    //   accounts: [secrets.key]
-    // },
-    // arbitrum_testnet: {
-    //   url: secrets.arbitrum_testnet_url,
-    //   accounts: [secrets.key]
-    // },
+    ropsten: {
+      url: secrets.ropsten_url,
+      accounts: [secrets.key]
+    },
+    mumbai: {
+      url: secrets.mumbai_url,
+      accounts: [secrets.key]
+    },
+    binance_testnet: {
+      url: secrets.binance_testnet_url,
+      accounts: [secrets.key]
+    },
+    arbitrum_testnet: {
+      url: secrets.arbitrum_testnet_url,
+      accounts: [secrets.key]
+    },
   },
-  //   etherscan: {
-  //     apiKey: {
-  //       // Ethereum
-  //       ropsten: secrets.etherscan_key,
+    etherscan: {
+      apiKey: {
+        // Ethereum
+        ropsten: secrets.etherscan_key,
 
-  //       // Polygon
-  //       polygonMumbai: secrets.mumbaiscan_key,
+        // Polygon
+        polygonMumbai: secrets.mumbaiscan_key,
 
-  //       // Binance
-  //       bscTestnet: secrets.bscscan_key,
+        // Binance
+        bscTestnet: secrets.bscscan_key,
 
-  //       // Arbitrum
-  //       arbitrumTestnet: secrets.arbiscan_key
-  //     }
+        // Arbitrum
+        arbitrumTestnet: secrets.arbiscan_key
+      }
 
-  // }
+  }
 };
