@@ -1,6 +1,17 @@
 # fitup
-
 Make your self accountable by betting on your goals!
+
+
+**Table of Contents**
+
+- [Setup](#setuo)
+  - [Deploy](#deploy
+    - [Ropsten](#ropsten)
+  - [Clone Repo](#clone-repo)
+
+
+
+
 
 ## Setup
 
