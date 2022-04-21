@@ -11,7 +11,7 @@ Make your self accountable by betting on your goals!
 - [Verify](#verify)
 - [Test](#test) 
 - [Contracts deployed and verified](#contracts-deployed-and-verified)
--[Runnig Light Node](#running-light-node)
+- [Runnig Light Node](#running-light-node)
 
     
 
