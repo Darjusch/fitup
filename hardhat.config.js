@@ -40,7 +40,7 @@ module.exports = {
       accounts: [secrets.key]
     },
     light_node: {
-      url: "http://127.0.0.1:8545",
+      url: "http://167.172.100.178:8545",
       accounts: [secrets.key]
     }
   },
