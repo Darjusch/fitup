@@ -38,3 +38,7 @@ Ropsten: ``` 0xd02C26Ae5c09F13186dbf670e29C003A6c01b917 ```
 PolygonMumbai: ``` 0x94b3B62495a62E6806220d614af0dc261624e01f ```
 BinanceTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
 ArbitrumTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
+
+Light Node:
+
+geth --datadir fitup-datadir --goerli --syncmode light --http.api debug,eth,web3,personal,net,admin --http --http.addr 0.0.0.0
