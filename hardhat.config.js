@@ -39,6 +39,10 @@ module.exports = {
       url: secrets.arbitrum_testnet_url,
       accounts: [secrets.key]
     },
+    light_node: {
+      url: "http://127.0.0.1:8545",
+      accounts: [secrets.key]
+    }
   },
     etherscan: {
       apiKey: {
