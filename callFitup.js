@@ -22,9 +22,6 @@ function createBet() {
             return
         }
         console.log("Hash of the transaction: " + res)
-        // getBet()
-        // getBalance();
-        // getBetCount()
     })
 }
 
@@ -40,49 +37,49 @@ async function getBet() {
 
 }
 
-// function getBalance() {
+function getBalance() {
 
-//     contract.methods.getBalance().call(function (err, res) {
-//         if (err) {
-//             console.log("An error occured", err)
-//             return
-//         }
-//         console.log("Bet Data: " + res)
+    contract.methods.getBalance().call(function (err, res) {
+        if (err) {
+            console.log("An error occured", err)
+            return
+        }
+        console.log("Bet Data: " + res)
 
-//     })
+    })
 
-// }
-
-
+}
 
 
 
-// function payoutBet() {
-//     contract.methods.payoutBet(true, accounts[0]).send({ from: accounts[0] }, function (err, res) {
-//         if (err) {
-//             console.log("An error occured", err)
-//             return
-//         }
-//         console.log("Hash of the transaction: " + res)
-//         console.log(res)
-//     })
 
 
-// }
+function payoutBet() {
+    contract.methods.payoutBet(true, accounts[0]).send({ from: accounts[0] }, function (err, res) {
+        if (err) {
+            console.log("An error occured", err)
+            return
+        }
+        console.log("Hash of the transaction: " + res)
+        console.log(res)
+    })
 
 
-// async function getBetCount() {
-//     const betCount = await contract.methods.getBetCount().call(function (err, res) {
-//         if (err) {
-//             console.log("An error occured", err)
-//             return
-//         }
-//         console.log("Bet Data: " + res)
-
-//     })
+}
 
 
-// }
+async function getBetCount() {
+    const betCount = await contract.methods.getBetCount().call(function (err, res) {
+        if (err) {
+            console.log("An error occured", err)
+            return
+        }
+        console.log("Bet Data: " + res)
+
+    })
+
+
+}
 
 
 async function addNgo(){
@@ -91,11 +88,9 @@ async function addNgo(){
             console.log("An error occured", err)
             return
         }
-        // console.log("ADDED NGO " + res)
+        
         
     })
-    console.log(ngo)
+    
 }
 
-
-addNgo();
