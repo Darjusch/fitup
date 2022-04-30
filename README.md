@@ -12,6 +12,7 @@ Make your self accountable by betting on your goals!
 - [Test](#test) 
 - [Contracts deployed and verified](#contracts-deployed-and-verified)
 - [Runnig Light Node](#running-light-node)
+- [software architecture](#software-architecture)
 
     
 
@@ -56,12 +57,14 @@ Verify contract automatically using etherscan
 
 ## Contracts deployed and verified
 
-(22.03.2022)
+(20.04.2022) 
 
+Rinkeby: https://rinkeby.etherscan.io/tx/0x80e2fe8666ca8d088bb5dab8138760a700690f969f2eede2c5204768a811fa06
 Ropsten: ``` 0xd02C26Ae5c09F13186dbf670e29C003A6c01b917 ```
 PolygonMumbai: ``` 0x94b3B62495a62E6806220d614af0dc261624e01f ```
 BinanceTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
 ArbitrumTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
+
 
 
 
@@ -84,3 +87,8 @@ ArbitrumTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
   2. Change the network name when starting Geth!
     ``` geth --datadir geth-tutorial --signer=geth-tutorial/clef/clef.ipc --{NETWORK_NAME} --syncmode light --http```
  :information_source:*Make sure the cainId and network name Matches!!*
+
+
+### Software Architecture
+
+- Please follow the link [here](https://lucid.app/lucidchart/6c5df66e-e7df-4652-bac1-9e1db0592ca4/edit?invitationId=inv_b469f514-36f1-440f-bad0-fc600166dfb5) for software architecture digram. 
