@@ -59,7 +59,7 @@ Verify contract automatically using etherscan
 
 (20.04.2022) 
 
-Rinkeby: https://rinkeby.etherscan.io/tx/0x80e2fe8666ca8d088bb5dab8138760a700690f969f2eede2c5204768a811fa06
+Rinkeby: https://rinkeby.etherscan.io/address/0x7bce3ccc9f14ecf400803c21743643bc830d9105
 Ropsten: ``` 0xd02C26Ae5c09F13186dbf670e29C003A6c01b917 ```
 PolygonMumbai: ``` 0x94b3B62495a62E6806220d614af0dc261624e01f ```
 BinanceTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
