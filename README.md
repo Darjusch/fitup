@@ -90,5 +90,5 @@ ArbitrumTestnet: ``` 0x068E565aaE43979aB6dfE58FdBE67E98477Ef1D9 ```
 
 
 ### Software Architecture
+![software architecture digram.](Smart_Contract_software_architecture.png)
 
-- Please follow the link [here](https://lucid.app/lucidchart/6c5df66e-e7df-4652-bac1-9e1db0592ca4/edit?invitationId=inv_b469f514-36f1-440f-bad0-fc600166dfb5) for software architecture digram. 
